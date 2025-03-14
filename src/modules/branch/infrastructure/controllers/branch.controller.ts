@@ -24,7 +24,7 @@ export class BranchController {
   constructor(
     private readonly createBranchUseCase: CreateBranchUseCase,
     private readonly getBranchUseCase: GetBranchUseCase,
-    private readonly getListBranchUsecase: GetBranchListUseCase,
+    private readonly getListBranchUseCase: GetBranchListUseCase,
     private readonly updateBranchUseCase: UpdateBranchUseCase,
     private readonly patchBranchUseCase: PatchBranchUseCase,
     private readonly deleteBranchUseCase: DeleteBranchUseCase,
@@ -38,7 +38,7 @@ export class BranchController {
   }
   @Get()
   async getList(@Query() queryParams: Record<string, string | number>) {
-    return this.getListBranchUsecase.execute(queryParams);
+    return this.getListBranchUseCase.execute(queryParams);
   }
   @Get(':id')
   async get(@Param('id') id: string) {
