@@ -12,9 +12,7 @@ import { GetEmployeeListUseCase } from './application/use-cases/get-employee-lis
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Employee.name, schema: EmployeeSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Employee.name, schema: EmployeeSchema }]),
   ],
   controllers: [EmployeeController],
   providers: [

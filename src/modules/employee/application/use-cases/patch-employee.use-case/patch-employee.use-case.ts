@@ -1,15 +1,14 @@
 import { EmployeeRepository } from '../../../infrastructure/repositories/employee.repository';
-import { Inject, Injectable } from '@nestjs/common';
 import { Employee } from '../../../domain/entities/employee.entity';
-
+import { Inject, Injectable } from '@nestjs/common';
 @Injectable()
-export class CreateEmployeeUseCase {
+export class PatchEmployeeUseCase {
   constructor(
     @Inject(EmployeeRepository)
     private readonly employeeRepository: EmployeeRepository,
   ) {}
 
-  async execute(employeeData: Employee): Promise<Employee> {
-    return this.employeeRepository.create(employeeData);
+  async execute(id: string, employeeData: Employee): Promise<Employee> {
+    return this.employeeRepository.patch(id, employeeData);
   }
 }

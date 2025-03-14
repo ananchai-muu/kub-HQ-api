@@ -9,7 +9,7 @@ import {
   Patch,
   Query,
 } from '@nestjs/common';
-import { CreateBranchDto } from '../../dto/branch.dto';
+import { CreateBranchDto } from '../dto/create-branch.dto';
 import { CreateBranchUseCase } from '../../application/use-cases/create-branch.use-case/create-branch.use-case';
 import { PatchBranchUseCase } from '../../application/use-cases/patch-branch.use-case/patch-branch.use-case';
 import { GetBranchUseCase } from '../../application/use-cases/get-branch.use-case/get-branch.use-case';
@@ -18,6 +18,9 @@ import { DeleteBranchUseCase } from '../../application/use-cases/delete-branch.u
 import { GetBranchListUseCase } from '../../application/use-cases/get-branch-list.use-case/get-branch-list.use-case';
 import { plainToInstance } from 'class-transformer';
 import { Branch } from '../../domain/entities/branch.entity';
+import { UpdateBranchDto } from '../dto/update-branch-dto';
+import { BranchResponseDto } from '../dto/branch-response.dto';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('branch')
 export class BranchController {
@@ -31,24 +34,48 @@ export class BranchController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new branch' })
+  @ApiResponse({
+    status: 201,
+    description: 'Branch created',
+    type: BranchResponseDto,
+  })
   async create(@Body() createBranchDto: CreateBranchDto) {
     const branchEntity = plainToInstance(Branch, createBranchDto);
 
     return this.createBranchUseCase.execute(branchEntity);
   }
   @Get()
+  @ApiOperation({ summary: 'Get branch List' })
+  @ApiResponse({
+    status: 200,
+    description: 'Branch found',
+    type: [BranchResponseDto],
+  })
   async getList(@Query() queryParams: Record<string, string | number>) {
     return this.getListBranchUseCase.execute(queryParams);
   }
   @Get(':id')
+  @ApiOperation({ summary: 'Get branch by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Branch found',
+    type: BranchResponseDto,
+  })
   async get(@Param('id') id: string) {
     return this.getBranchUseCase.execute(id);
   }
 
   @Put(':id')
+  @ApiOperation({ summary: 'Update branch' })
+  @ApiResponse({
+    status: 200,
+    description: 'Branch updated',
+    type: BranchResponseDto,
+  })
   async update(
     @Param('id') id: string,
-    @Body() branchData: Partial<CreateBranchDto>,
+    @Body() branchData: Partial<UpdateBranchDto>,
   ) {
     // แปลงข้อมูลจาก DTO ให้ตรงกับ Branch Entity
     const updatedBranch = plainToInstance(Branch, {
@@ -64,9 +91,15 @@ export class BranchController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update branch' })
+  @ApiResponse({
+    status: 200,
+    description: 'Branch updated',
+    type: BranchResponseDto,
+  })
   async patch(
     @Param('id') id: string,
-    @Body() branchData: Partial<CreateBranchDto>,
+    @Body() branchData: Partial<UpdateBranchDto>,
   ) {
     // แปลงข้อมูลจาก DTO ให้ตรงกับ Branch Entity
     const patchedBranch = plainToInstance(Branch, {
@@ -81,6 +114,8 @@ export class BranchController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete branch' })
+  @ApiResponse({ status: 200, description: 'Branch deleted' })
   async delete(@Param('id') id: string) {
     return this.deleteBranchUseCase.execute(id);
   }
