@@ -13,8 +13,21 @@ export class BranchRepository implements IBranchRepository {
     return createdBranch.save();
   }
 
-  async findAll(): Promise<Branch[]> {
-    return this.branchModel.find().exec();
+  async findAll(
+    queryParams: Record<string, string | number>,
+  ): Promise<Branch[]> {
+    const query: any = {};
+
+    // Mapping Query String -> MongoDB Query
+    Object.entries(queryParams).forEach(([key, value]) => {
+      if (typeof value === 'string' && isNaN(Number(value))) {
+        query[key] = { $regex: new RegExp(value, 'i') }; // ค้นหาแบบ case-insensitive
+      } else {
+        query[key] = value;
+      }
+    });
+
+    return this.branchModel.find(query).exec();
   }
 
   async findById(id: string): Promise<Branch> {
@@ -27,5 +40,10 @@ export class BranchRepository implements IBranchRepository {
 
   async delete(id: string): Promise<void> {
     await this.branchModel.findByIdAndDelete(id).exec();
+  }
+  async patch(id: string, branchData: Partial<Branch>): Promise<Branch> {
+    return this.branchModel
+      .findByIdAndUpdate(id, branchData, { new: true })
+      .exec();
   }
 }
