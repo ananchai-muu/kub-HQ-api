@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Branch, BranchSchema } from './domain/entities/branch.entity';
 import { BranchRepository } from './infrastructure/repositories/branch.repository';
 import { CreateBranchUseCase } from './application/use-cases/create-branch.use-case/create-branch.use-case';
-import { BranchController } from './infrastructure/controllers/branch.controller';
+import { BranchController } from './presentation/controllers/branch.controller';
 import { UpdateBranchUseCase } from './application/use-cases/update-branch.use-case/update-branch.use-case';
 import { GetBranchUseCase } from './application/use-cases/get-branch.use-case/get-branch.use-case';
 import { PatchBranchUseCase } from './application/use-cases/patch-branch.use-case/patch-branch.use-case';

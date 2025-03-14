@@ -9,7 +9,7 @@ import {
   Patch,
   Query,
 } from '@nestjs/common';
-import { CreateBranchDto } from '../../dto/branch.dto';
+import { CreateBranchDto } from '../dto/create-branch.dto';
 import { CreateBranchUseCase } from '../../application/use-cases/create-branch.use-case/create-branch.use-case';
 import { PatchBranchUseCase } from '../../application/use-cases/patch-branch.use-case/patch-branch.use-case';
 import { GetBranchUseCase } from '../../application/use-cases/get-branch.use-case/get-branch.use-case';
