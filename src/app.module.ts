@@ -10,7 +10,7 @@ import { MarketingModule } from './modules/marketing/marketing.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/restaurant_db'), // กำหนด URL สำหรับ MongoDB
+    MongooseModule.forRoot('mongodb://localhost:27017/franchise_hq'), // กำหนด URL สำหรับ MongoDB
     BranchModule, EmployeeModule, InventoryModule, PosModule, FinanceModule, PerformanceModule, MarketingModule,  // โมดูลอื่น ๆ จะตามมา
   ],
 })
