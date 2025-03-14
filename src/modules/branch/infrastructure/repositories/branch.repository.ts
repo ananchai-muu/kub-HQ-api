@@ -3,23 +3,22 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IBranchRepository } from '../../domain/repositories/branch.repository.interface';
 import { Branch } from '../../domain/entities/branch.entity';
-import { CreateBranchDto } from '../../presentation/dto/create-branch.dto';
 @Injectable()
 export class BranchRepository implements IBranchRepository {
   constructor(@InjectModel(Branch.name) private model: Model<Branch>) {}
 
-  async create(createBranchDto: CreateBranchDto): Promise<Branch> {
+  async create(createBranch: Branch): Promise<Branch> {
     // แปลง CreateBranchDto เป็น Branch entity ก่อนที่จะบันทึก
     const createdBranch = new this.model({
-      name: createBranchDto.name,
-      status: createBranchDto.status,
-      phone: createBranchDto.phone,
-      location: createBranchDto.location,
+      name: createBranch.name,
+      status: createBranch.status,
+      phone: createBranch.phone,
+      location: createBranch.location,
       address: {
-        district: createBranchDto.address.district,
-        province: createBranchDto.address.province,
-        country: createBranchDto.address.country,
-        postcode: createBranchDto.address.postcode,
+        district: createBranch.address.district,
+        province: createBranch.address.province,
+        country: createBranch.address.country,
+        postcode: createBranch.address.postcode,
       },
     });
 

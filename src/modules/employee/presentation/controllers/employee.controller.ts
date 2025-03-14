@@ -2,6 +2,7 @@ import { CreateEmployeeDto } from '../dto/create-employee.dto';
 import { Employee } from '../../domain/entities/employee.entity';
 import {
   Body,
+  Controller,
   Delete,
   Get,
   Param,
@@ -17,7 +18,9 @@ import { GetEmployeeUseCase } from '../../application/use-cases/get-employee.use
 import { UpdateEmployeeUseCase } from '../../application/use-cases/update-employee.use-case/update-employee.use-case';
 import { DeleteEmployeeUseCase } from '../../application/use-cases/delete-employee.use-case/delete-employee.use-case';
 import { PatchEmployeeUseCase } from '../../application/use-cases/patch-employee.use-case/patch-employee.use-case';
+import { UpdateEmployeeDto } from '../dto/update-employee.dto';
 
+@Controller('employee')
 export class EmployeeController {
   constructor(
     private readonly createEmployeeUsecase: CreateEmployeeUseCase,
@@ -45,7 +48,7 @@ export class EmployeeController {
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() data: Partial<CreateEmployeeDto>,
+    @Body() data: Partial<UpdateEmployeeDto>,
   ) {
     const updatedBranch = plainToInstance(Employee, data);
 
@@ -55,7 +58,7 @@ export class EmployeeController {
   @Patch(':id')
   async patch(
     @Param('id') id: string,
-    @Body() data: Partial<CreateEmployeeDto>,
+    @Body() data: Partial<UpdateEmployeeDto>,
   ) {
     const patchedEmployee = plainToInstance(Employee, data);
 
